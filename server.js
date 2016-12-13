@@ -24,7 +24,12 @@ MongoClient.connect(mlablink, (err, database) => {
 // ES6 code (Arrow function)
 app.get('/', (req, res) => {
   res.sendFile(__dirname + '/index.html')
-  // Note: __dirname is directory that contains the JavaScript source code. Try logging it and see what you get!
+  var cursor = db.collection('quotes').find()
+  //console.log(cursor)
+  db.collection('quotes').find().toArray(function(err, results) {
+	  console.log(results)
+	  // send HTML file populated with quotes here
+	  })
 })
 
 app.post('/quotes', (req, res) => {
@@ -35,5 +40,3 @@ app.post('/quotes', (req, res) => {
     res.redirect('/');
   })
 })
-
-
