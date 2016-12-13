@@ -5,6 +5,9 @@ const app = express();
 const MongoClient = require('mongodb').MongoClient;
 
 app.use(bodyParser.urlencoded({extended: true}))
+app.use(express.static('public'))
+app.use(bodyParser.json())
+//
 app.set('view engine', 'ejs')
 
 var db
@@ -42,3 +45,20 @@ app.post('/quotes', (req, res) => {
     res.redirect('/');
   })
 })
+
+app.put('/quotes', (req, res) => {
+  db.collection('quotes')
+  .findOneAndUpdate({name: 'mou'}, {
+    $set: {
+      name: req.body.name,
+      quote: req.body.quote
+    }
+  }, {
+    sort: {_id: -1},
+    upsert: true
+  }, (err, result) => {
+    if (err) return res.send(err)
+    res.send(result)
+  })
+})
+
