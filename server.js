@@ -13,9 +13,10 @@ app.set('view engine', 'ejs')
 var db
 var port = 3000
 const mlablink = 'mongodb://mou:armed@ds133438.mlab.com:33438/crud-express-mongodb'
+const localdblink = 'mongodb://@localhost:27017/crud-express-mongodb'
 
 
-MongoClient.connect(mlablink, (err, database) => {
+MongoClient.connect(localdblink, (err, database) => {
   
   if (err) return console.log(err);
   db = database;
