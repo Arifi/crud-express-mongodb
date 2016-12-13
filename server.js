@@ -2,32 +2,38 @@ console.log('May Node be with you');
 const express = require('express');
 const bodyParser= require('body-parser');
 const app = express();
-const MongoClient = require('mongodb').MongoClient
+const MongoClient = require('mongodb').MongoClient;
 
 app.use(bodyParser.urlencoded({extended: true}));
 
+var db;
 
-app.listen(3000, function() {
-  console.log('listening on 3000');
-  console.log('DIRNAME : ' + __dirname);
-});
+const mlablink = 'mongodb://mou:armed@ds133438.mlab.com:33438/crud-express-mongodb'
+
+MongoClient.connect(mlablink, (err, database) => {
+  
+  if (err) return console.log(err);
+  db = database;
+  app.listen(3000, () => {
+    console.log('listening on 3000');
+	console.log('DIRNAME : ' + __dirname);
+  })
+  
+})
 
 // ES6 code (Arrow function)
 app.get('/', (req, res) => {
   res.sendFile(__dirname + '/index.html')
   // Note: __dirname is directory that contains the JavaScript source code. Try logging it and see what you get!
 })
-/*
-app.get('/', function(req, res) {
-  res.send('Hello World')
-})
-// Note: request and response are usually written as req and res respectively.
-*/
 
 app.post('/quotes', (req, res) => {
-  console.log(req.body)
+  db.collection('quotes').save(req.body, (err, result) => {
+    if (err) return console.log(err);
+
+    console.log('saved to database');
+    res.redirect('/');
+  })
 })
 
-MongoClient.connect('mongodb://mourad:3?9T:(w5V9g{p\uJ@ds133438.mlab.com:33438/crud-express-mongodb', (err, database) => {
-  // ... start the server
-})
+
