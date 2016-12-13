@@ -1,0 +1,11 @@
+{
+  "name": "crud-express-mongodb",
+  "version": "1.0.0",
+  "description": "Building a Simple CRUD Application with Express and MongoDB",
+  "main": "index.js",
+  "scripts": {
+    "test": "test"
+  },
+  "author": "MA",
+  "license": "ISC"
+}
