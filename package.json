@@ -4,6 +4,7 @@
   "description": "Building a Simple CRUD Application with Express and MongoDB",
   "main": "index.js",
   "scripts": {
+    "dev": "nodemon server.js",
     "test": "test"
   },
   "author": "MA",
